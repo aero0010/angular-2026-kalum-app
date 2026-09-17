@@ -1,0 +1,22 @@
+<mat-card [style.background]="'#303f9f'">
+    <mat-card-title style="text-align: center; color: white; margin-top: 30px;">
+        <img src="images/logotipo copia.png" alt="Kalum Logo"/>
+    </mat-card-title>
+    <div class="box">
+        <mat-card class="kalum-career-card" *ngFor="let career of careers" >
+            <mat-card-header>
+                <div mat-card-avatar class="kalum-career-header-image"></div>
+                <mat-card-title>{{ career.name }}</mat-card-title>
+                <mat-card-subtitle>{{ career.subTitle }}</mat-card-subtitle>
+            </mat-card-header>
+            <img mat-card-image src="{{ career.image }}" alt="Kalum Image"/>
+            <mat-card-content class="banner-text">
+                <p [innerHTML]="career.description"></p>
+            </mat-card-content>
+            <mat-card-actions>
+                <button mat-button>Asignarme</button>
+                <button mat-button>Compartir</button>
+            </mat-card-actions>
+        </mat-card>
+    </div>
+</mat-card>
