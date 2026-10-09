@@ -110,3 +110,44 @@
     flex-direction: column;
     gap: 16px;
 }
+
+.user-header{
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: center;
+    width: 100%;
+    padding: 0 10px;
+}
+
+.search {
+    display: flex;
+    align-items: center;
+}
+
+.acctions{
+    display: flex;
+    align-items: center;
+    margin-left: auto;
+}
+
+.acctions button{
+    margin-left: 20px;
+}
+
+.form-input-container{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.text-center {
+    text-align: center;
+}
+
+.text-center-colum {
+    text-align: center !important;
+}
+
+.mat-cell:nth-child(1), mat-header-cell:nth-child(1){
+    flex: 0 0 6%;
+}

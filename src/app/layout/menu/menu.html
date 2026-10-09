@@ -3,10 +3,10 @@
         <mat-icon>menu</mat-icon>
     </button>
     <span class="toolbar-spacer"></span>
-    <button mat-icon-button (click)="logOut()" ngIf="authService.isAuthenticated()">
+    <button mat-icon-button (click)="logOut()" *ngIf="authService.isAuthenticated()">
         <mat-icon>logout</mat-icon>
     </button>
-    <button mat-icon-button (click)="login()" ngIf="!authService.isAuthenticated()">
+    <button mat-icon-button (click)="login()" *ngIf="!authService.isAuthenticated()">
         <mat-icon>account_circle</mat-icon>
     </button>
 </mat-toolbar>

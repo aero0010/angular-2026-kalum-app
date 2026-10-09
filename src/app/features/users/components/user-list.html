@@ -1,1 +1,86 @@
-<p>user-list works!</p>
+<mat-card>
+    <h2 class="alinear">Listado de usuarios</h2>
+    <mat-card-header class="user-header">
+        <div class="search">
+            <mat-form-field hintLabel="Buscar" appearance="fill">
+                <mat-label>Buscar por identificador</mat-label>
+                <input type="text" matInput #input >
+            </mat-form-field>
+        </div>
+    </mat-card-header>
+        <div class="actions">
+            <button mat-raised-button color="primary" (click)="openFormCreateUser()">
+                Agregar usuario
+            </button>
+        </div>
+    <mat-card-content>
+        <table mat-table class="mat-cell" [dataSource]="dataSource">
+            <ng-container matColumnDef="Apellidos">
+                <th *matHeaderCellDef mat-header-cell>Apellidos</th>
+                <td mat-cell *matCellDef="let user">
+                    <ng-container *ngIf="user">
+                        {{ user.lastName }}
+                    </ng-container>
+                </td>
+            </ng-container>
+            <ng-container matColumnDef="Nombres">
+                <th *matHeaderCellDef mat-header-cell>Nombres</th>
+                <td mat-cell *matCellDef="let user">
+                    <ng-container *ngIf="user">
+                        {{ user.fistName }}
+                    </ng-container>
+                </td>
+            </ng-container>
+            <ng-container matColumnDef="Nombre de usuario">
+                <th *matHeaderCellDef mat-header-cell>Nombre de usuario</th>
+                <td mat-cell *matCellDef="let user">
+                    <ng-container *ngIf="user">
+                        {{ user.userName }}
+                    </ng-container>
+                </td>
+            </ng-container>
+            <ng-container matColumnDef="Correo electronico">
+                <th *matHeaderCellDef mat-header-cell>Correo electrónico</th>
+                <td mat-cell *matCellDef="let user">
+                    <ng-container *ngIf="user">
+                        {{ user.email }}
+                    </ng-container>
+                </td>
+            </ng-container>
+            <ng-container matColumnDef="Telefono">
+                <th *matHeaderCellDef mat-header-cell>Teléfono</th>
+                <td mat-cell *matCellDef="let user">
+                    <ng-container *ngIf="user">
+                        {{ user.phooneNumber }}
+                    </ng-container>
+                </td>
+            </ng-container>
+            <ng-container matColumnDef="Roles">
+                <th *matHeaderCellDef mat-header-cell>Reles</th>
+                <td mat-cell *matCellDef="let user">
+                    <ng-container *ngIf="user">
+                        {{ user.roles }}
+                    </ng-container>
+                </td>
+            </ng-container>
+            <ng-container matColumnDef="Acciones">
+                <th *matHeaderCellDef mat-header-cell>Acciones</th>
+                <td mat-cell *matCellDef="let user let i=index" >
+                    <button  mat-icon-button color="accent" (click)="openFormEditUser(user)">
+                        <mat-icon aria-label="Editar">
+                            edit
+                        </mat-icon>
+                    </button>
+                    <button mat-icon-button color="accent" (click)="deleteUser(user.id)">
+                        <mat-icon aria-label="Borrar">
+                            delete
+                        </mat-icon>
+                    </button>
+                </td>
+            </ng-container>
+            <tr mat-header-row *matHeaderRowDef="displayColums"></tr>
+            <tr mat-row *matRowDef="let row; columms: displayColums"></tr>
+        </table>
+        <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons=""></mat-paginator>
+    </mat-card-content>
+</mat-card>

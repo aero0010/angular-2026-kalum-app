@@ -1,9 +1,11 @@
 export class User {
-    lastname?: string;
+    id?: string;
     firstname?: string;
+    lastname?: string;
     username?: string;
-    password?: string;
     email?: string;
+    password?: string;
+    phoneNumber?: string;
     identityUser?: string;
     roles: string[] = [];
 }

@@ -26,7 +26,6 @@ export class Sidenav {
   }
 
   userView(){
-    console.log(this.authService.isAuthenticated());
     if(this.authService.isAuthenticated()){
       this.router.navigate(['/users']);
     }

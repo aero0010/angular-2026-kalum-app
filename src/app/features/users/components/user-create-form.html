@@ -1,0 +1,43 @@
+<h2 mat-dialog-title> {{ title }} </h2>
+<mat-dialog-content>
+    <form [formGroup]="formUserGroup">
+        <div class="form-input-container">
+            <mat-form-field>
+                <input type="text" formControlName="LastName" matInput placeholder="Apellidos">
+            </mat-form-field>
+        </div>
+        <div class="form-input-container">
+            <mat-form-field>
+                <input type="text" formControlName="firstName" matInput placeholder="Nombres">
+            </mat-form-field>
+        </div>
+        <div class="form-input-container">
+            <mat-form-field>
+                <input type="text" formControlName="username" matInput placeholder="Nombre de usario">
+            </mat-form-field>
+        </div>
+        <div class="form-input-container">
+            <mat-form-field>
+                <input type="text" formControlName="email" matInput placeholder="Correo electrónico">
+            </mat-form-field>
+        </div>
+        <div class="form-input-container">
+            <mat-form-field>
+                <input type="text" formControlName="phoneNumber" matInput placeholder="Numbero de teléfono">
+            </mat-form-field>
+        </div>
+        <div class="form-input-container">
+            <mat-form-field>
+                <input type="password" formControlName="password" matInput placeholder="Contraseña">
+            </mat-form-field>
+        </div>
+    </form>
+</mat-dialog-content>
+<mat-dialog-actions>
+    <button mat-button color="primary" (click)="onSave()">
+        <mat-icon>save</mat-icon> Guardar
+    </button>
+    <button mat-button color="primary" (click)="onCancel()">
+        <mat-icon>cancel</mat-icon> Cancelar
+    </button>
+</mat-dialog-actions>
