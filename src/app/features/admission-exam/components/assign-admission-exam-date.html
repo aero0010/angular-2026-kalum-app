@@ -1,0 +1,80 @@
+<h2 mat-dialog-title class="dialog-title">
+    <span class="dialog-title-icon">
+        <mat-icon>supervisor_account</mat-icon>
+    </span>
+    <span class="dialog-title-text">
+        <strong>{{ title }}</strong>
+        <small>Completa la información para registrar una nueva solicitud</small>
+    </span>
+</h2>
+
+<mat-dialog-content>
+    <form [formGroup]="assignAdmissionExamDateForm" id="examDateForm">
+        <div class="form-input-container">
+            <mat-form-field>
+                <input type="text" formControlName="lastName" matInput placeholder="Apellidos" required>
+            </mat-form-field>
+        </div>
+        <div class="form-input-container">
+            <mat-form-field>
+                <input type="text" formControlName="firstName" matInput placeholder="Nombres" required>
+            </mat-form-field>
+        </div>
+        <div class="form-input-container">
+            <mat-form-field>
+                <input type="text" formControlName="address" matInput placeholder="Dirección" required>
+            </mat-form-field>
+        </div>
+        <div class="form-input-container">
+            <mat-form-field>
+                <input type="text" formControlName="phone" matInput placeholder="Teléfono" required>
+            </mat-form-field>
+        </div>
+        <div class="form-input-container">
+            <mat-form-field>
+                <input type="text" formControlName="email" matInput placeholder="Correo electrónico">
+            </mat-form-field>
+        </div>
+        <div class="form-input-container">
+            <mat-form-field>
+                <mat-label>Fecha exámen</mat-label>
+                <mat-select formControlName="examId">
+                    <mat-option *ngFor="let admisonExam of admissionEexams" [value]="admisonExam.examId">
+                        {{ admisonExam.examDate | date: 'dd/MM/yyyy HH:mm' }}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+        <div class="form-input-container">
+            <mat-form-field>
+                <mat-label>Carrera Técnica</mat-label>
+                <mat-select formControlName="careerId">
+                    <mat-option *ngFor="let career of careers" [value]="career.careerId">
+                        {{ career.name }}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+        <div class="form-input-container">
+            <mat-form-field>
+                <mat-label>Jornada</mat-label>
+                <mat-select formControlName="scheduleId">
+                    <mat-option *ngFor="let schedule of schedules" [value]="schedule.scheduleId">
+                        {{ schedule.prefix }} - {{ schedule.description }}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+    </form>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end" class="form-dialog-actions">
+    <button mat-flat-button color="primary" type="submit" form="examDateForm" [disabled]="assignAdmissionExamDateForm.invalid">
+        <mat-icon>save</mat-icon>
+        Enviar solicitud
+    </button>
+    <button mat-stroked-button type="button" (click)="onCancel()">
+        <mat-icon>close</mat-icon>
+        Cancelar
+    </button>
+</mat-dialog-actions>

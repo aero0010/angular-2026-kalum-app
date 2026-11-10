@@ -1,22 +1,57 @@
-<mat-card [style.background]="'#303f9f'">
-    <mat-card-title style="text-align: center; color: white; margin-top: 30px;">
-        <img src="images/logotipo copia.png" alt="Kalum Logo"/>
-    </mat-card-title>
-    <div class="box">
-        <mat-card class="kalum-career-card" *ngFor="let career of careers" >
-            <mat-card-header>
-                <div mat-card-avatar class="kalum-career-header-image"></div>
-                <mat-card-title>{{ career.name }}</mat-card-title>
-                <mat-card-subtitle>{{ career.subTitle }}</mat-card-subtitle>
-            </mat-card-header>
-            <img mat-card-image src="{{ career.image }}" alt="Kalum Image"/>
-            <mat-card-content class="banner-text">
-                <p [innerHTML]="career.description"></p>
-            </mat-card-content>
-            <mat-card-actions>
-                <button mat-button>Asignarme</button>
-                <button mat-button>Compartir</button>
-            </mat-card-actions>
-        </mat-card>
-    </div>
-</mat-card>
+<div class="dashboard">
+    <section class="welcome-banner">
+        <div class="welcome-content">
+            <img src="images/logotipo copia.png" alt="Kalum Logo" />
+
+            <div class="welcome-text">
+                <span class="wwelcome-label">PLATAFORMA ACADÉMICA</span>
+                <h1>Bienvenido al portal Kalum</h1>
+                <p>Descubre tu futuro, explora nuestras carrreras y encuentra el camino hacia tus metas</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="careers-section">
+        <div class="section-heading">
+            <div>
+                <h2>Explora nuestras carreras</h2>
+                <p>Conoce las opciones académicas disponibles para ti.</p>
+            </div>
+
+            <span class="career-count">
+                <mat-icon>school</mat-icon>
+                {{ careers.length }} carreras
+            </span>
+        </div>
+
+        <div class="career-grid">
+            <mat-card class="kalum-career-card" appearance="outlined" *ngFor="let career of careers">
+                <div class="career-image-container">
+                    <img mat-card-image src="{{ career.image }}" alt="Kalum Image" class="career-image"/>
+                    <span class="career-badge">
+                        <mat-icon>school</mat-icon>
+                        Carrera
+                    </span>
+                </div>
+                
+                <mat-card-content class="career-content">
+                    <h3>{{ career.name }}</h3>
+                    <p class="carrer-subtitle"> {{  career.subTitle }}</p>
+                    <div class="career-description" [innerHTML]="career.description"></div>
+                </mat-card-content>
+
+                <mat-card-actions class="career-actions">
+                    <button mat-button class="assign-button" (click)="assignCareer(career)">
+                        <mat-icon>how_to_reg</mat-icon>
+                        ASIGNARME
+                    </button>
+
+                    <button mat-button class="share-button" (click)="shareCareer(career)" aria-label="Compartir Carrera">
+                        <mat-icon>share</mat-icon>
+                        Compartir
+                    </button>
+                </mat-card-actions>
+            </mat-card>
+        </div>
+    </section>
+</div>

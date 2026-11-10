@@ -1,26 +1,38 @@
 <mat-nav-list>
-    <mat-list-item>
-        <mat-icon>dashboard</mat-icon>
-        <span class="menu-text">Dashboard</span>
+    <mat-list-item (click)="dashboardView()">
+        <div class="menu-item">
+            <mat-icon>dashboard</mat-icon>
+            <span class="menu-text">Dashboard</span>
+        </div>
     </mat-list-item>
     <mat-list-item>
-        <mat-icon>calendar_month</mat-icon>
-        <span class="menu-text">Examenes adminision</span>
+        <div class="menu-item" (click)="addmissionExamView()">
+            <mat-icon>calendar_month</mat-icon>
+            <span class="menu-text">Examenes adminision</span>
+        </div>
     </mat-list-item>
-    <mat-list-item>
-        <mat-icon>credit_card</mat-icon>
-        <span class="menu-text">Cuenta corriente</span>
+    <mat-list-item *ngIf="authService.hasRole('ROLE_STUDENT')">
+        <div class="menu-item">
+            <mat-icon>credit_card</mat-icon>
+            <span class="menu-text">Cuenta corriente</span>
+        </div>
     </mat-list-item>
-    <mat-list-item>
-        <mat-icon>event_available</mat-icon>
-        <span class="menu-text">Resultado examen</span>
+    <mat-list-item *ngIf="authService.hasRole('ROLE_STUDENT')">
+        <div class="menu-item">
+            <mat-icon>event_available</mat-icon>
+            <span class="menu-text">Resultado examen</span>
+        </div>
     </mat-list-item>
-    <mat-list-item>
-        <mat-icon>people</mat-icon>
-        <span class="menu-text" (click)="userView()">Usuarios</span>
+    <mat-list-item *ngIf="authService.isAuthenticated() && authService.hasRole('ROLE_STUDENT')" (click)="userView()">
+        <div class="menu-item">
+            <mat-icon>people</mat-icon>
+            <span class="menu-text">Usuarios</span>
+        </div>
     </mat-list-item>
-    <mat-list-item>
-        <mat-icon>security</mat-icon>
-        <span class="menu-text">Roles</span>
+    <mat-list-item *ngIf="authService.isAuthenticated() && authService.hasRole('ROLE_STUDENT')" (click)="roleView()">
+        <div class="menu-item">
+            <mat-icon>security</mat-icon>
+            <span class="menu-text">Roles</span>
+        </div>
     </mat-list-item>
 </mat-nav-list>

@@ -32,4 +32,8 @@ export class Layout {
   toggleSidenav(){
     this.isSidenavOpen.update(v => !v);
   }
+
+  closeSidenav(){
+    this.isSidenavOpen.set(false);
+  }
 }

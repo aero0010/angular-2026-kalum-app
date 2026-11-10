@@ -31,6 +31,7 @@ export class UserCreateForm implements OnInit {
   public formUserGroup: FormGroup;
   user: User = new User();
   title: string = 'Agregar'
+  isEditMode = false;
 
   constructor(
     private formDialogUser: MatDialogRef<UserCreateForm>,
@@ -38,13 +39,15 @@ export class UserCreateForm implements OnInit {
     private userServce: UserService,
     @Inject(MAT_DIALOG_DATA) public data: any
   ) {
+    this.isEditMode = data != null;
+
     this.formUserGroup = formBuilder.group({
-      username: [data != null ? data.userName : '', Validators.required],
-      fistName: [data != null ? data.firstName : '', Validators.required],
+      username: [data != null ? data.username : '', Validators.required],
+      firstName: [data != null ? data.firstName : '', Validators.required],
       lastName: [data != null ? data.lastName : '', Validators.required],
       email: [data != null ? data.email : '', Validators.required],
       phoneNumber: [data != null ? data.phoneNumber : '', Validators.required],
-      password: [data != null ? data.password : '', Validators.required]
+      password: [data != null ? data.password : '', this.isEditMode ? [] : Validators.required]
     });
 
     if (data != null) {
@@ -58,17 +61,19 @@ export class UserCreateForm implements OnInit {
   }
 
   onSave() {
-    this.user.firstname = this.formUserGroup?.get('firstName')?.value;
-    this.user.lastname = this.formUserGroup?.get('lastName')?.value;
+    this.user.firstName = this.formUserGroup?.get('firstName')?.value;
+    this.user.lastName = this.formUserGroup?.get('lastName')?.value;
     this.user.username = this.formUserGroup?.get('username')?.value;
     this.user.email = this.formUserGroup?.get('email')?.value;
     this.user.phoneNumber = this.formUserGroup?.get('phoneNumber')?.value;
-
+    console.log(this.title);
     if (this.title === 'Agregar') {
       this.user.password = this.formUserGroup?.get('password')?.value;
       this.userServce.createUser(this.user).subscribe((response: any) => {
+        console.log(response.success);
+        this.formDialogUser.close(0);
         if (response.success) {
-          Swal.fire({
+          /*Swal.fire({
             icon: 'success',
             title: 'Users',
             text: response.message,
@@ -77,7 +82,7 @@ export class UserCreateForm implements OnInit {
             if (handlerResult.isConfirmed) {
               this.formDialogUser.close(0);
             }
-          });
+          });*/
         } else {
           Swal.fire({
             icon: 'error',
@@ -93,22 +98,27 @@ export class UserCreateForm implements OnInit {
       });
     } else {
       this.userServce.updateUser(this.user).subscribe((response: any) => {
-        Swal.fire({
+        this.formDialogUser.close(0);
+        /*Swal.fire({
           icon: 'success',
           title: 'Users',
-          text: 'Datos actualizados!!!',
+          text: 'Datos actualizados',
           footer: 'Kalum App v1.0.0'
         }).then(handlerResult => {
           if (handlerResult.isConfirmed) {
             this.formDialogUser.close(0);
           }
-        });
+        });*/
       });
     }
 
   }
 
   onCancel() {
+    
+    this.userServce.getUsers();
+    console.log("closed");
     this.formDialogUser.close(1);
+
   }
 }

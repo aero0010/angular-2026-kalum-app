@@ -10,6 +10,8 @@ import { MatInputModule } from '@angular/material/input';
 import { TechnicalCareer } from '../../auth/model/technical-career.model';
 import { TechnicalCareerService } from '../../services/technical-career-service';
 import Swal from 'sweetalert2';
+import { AuthService } from '../../services/auth-service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-dashboard',
@@ -35,14 +37,15 @@ export class Dashboard implements OnInit {
 
   constructor(
     private technicalCareersService: TechnicalCareerService,
-    private cdr: ChangeDetectorRef,
+    private authService: AuthService,
+    private router: Router
   ) {}
 
   async ngOnInit(): Promise<void> {
     try {
-      const response = await this.technicalCareersService.getTechnicalCareers();
-      this.careers = [...response];
-      this.cdr.detectChanges();
+      this.technicalCareersService.getTechnicalCareers().subscribe((response) => {
+        this.careers = response.data;
+      });
     } catch (error) {
       Swal.fire({
         icon: 'error',
@@ -51,6 +54,31 @@ export class Dashboard implements OnInit {
         footer: '<a href="#">Why do I have this issue?</a>'
       });
     }
+  }
+
+  async shareCareer(career: TechnicalCareer): Promise<void>{
+    const shareData = {
+      title: career.name,
+      text: `${career.name} - ${career.subTitle ?? ''}`,
+      url: window.location.href
+    };
+
+    await navigator.clipboard.writeText(`${shareData.text}\n${shareData.url}`);
+    console.log("Text copied")
+  }
+
+  assignCareer(career: TechnicalCareer): void{
+    if (!this.authService.isAuthenticated()) {
+     Swal.fire({
+      icon: 'warning',
+      title: 'Asignación del curso',
+      text: 'Vemos que no has iniciado sesión',
+      footer: '<a href="#">v1.0.0</a>'
+     }).then(response => {
+      this.router.navigate([`login/guest/${career.careerId}`])
+     }); 
+    }
+    console.log('Carrere seleccionada:', career);
   }
 }
 

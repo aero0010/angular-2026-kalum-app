@@ -3,6 +3,7 @@ import { User } from '../features/users/models/user.model';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Login } from '../auth/model/login.model';
 import { environment } from '../../environments/environment.prod';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -16,14 +17,15 @@ export class AuthService {
   private _user?: User;
 
   public get token(): any{
-    if (this._token != null && this._token !== undefined && this, this._token !== '') {
+    if (this._token != null && this._token !== undefined && this._token !== '') {
       return this._token;
     }
     
     if (this._token == null && localStorage.getItem('token') != null) {
-      this._token = JSON.stringify(localStorage.getItem('token') as string);
+      this._token = localStorage.getItem('token') as string;
       return this._token;
     }
+
 
     return null;
   }
@@ -47,7 +49,12 @@ export class AuthService {
 
   login (login: Login){
     const httpHeaders = new HttpHeaders({'Content-Type': 'application/json'});
-    return this.http.post(`${this.host}:${this.port}/${this.path}/login`, login, {headers: httpHeaders});
+    return this.http.post(`${this.host}:${this.port}/${this.path}/account/login`, login, {headers: httpHeaders});
+  }
+
+  accountCreate(user: User): Observable<any>{
+    const httpHeaders = new HttpHeaders({'Content-Type':'application/json'});
+    return this.http.post(`${this.host}:${this.port}/kalum-auth/v1/account/create`, user, {headers: httpHeaders})
   }
 
   saveToken(token: string): void{
@@ -79,10 +86,21 @@ export class AuthService {
   }
 
   isAuthenticated(): boolean{
-    if (this._token != null) {
+    
+    if (this.token != null) {
       let payload = this.getPayload(this.token);
       return payload != null && payload.username && payload.username.length > 0
     }
     return false;
+  }
+
+  isTokenExpired(): boolean {
+    let now = new Date().getTime() / 1000;
+    
+    return this.getPayload(this.token).exp < now;
+  }
+
+  hasRole(role: string):boolean{
+    return this.user.roles.includes(role);
   }
 }

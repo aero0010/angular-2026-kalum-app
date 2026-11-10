@@ -13,6 +13,7 @@ import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { UserCreateForm } from './user-create-form';
 import Swal from 'sweetalert2';
+import { MatTooltip, MatTooltipModule } from '@angular/material/tooltip';
 
 @Component({
   selector: 'app-user-list',
@@ -27,14 +28,15 @@ import Swal from 'sweetalert2';
     MatTableModule,
     MatIconModule,
     MatPaginatorModule,
-    MatDialogModule
-  ],
+    MatDialogModule,
+    MatTooltipModule
+],
   templateUrl: './user-list.html',
   styles: ``,
 })
 export class UserList implements OnInit{
 
-  displayColums: string[] = ['Apellido', 'Nombre', 'Nombre de usuario', 'Correo electronico', 'Telefono', 'Roles', 'Acciones']
+  displayColums: string[] = ['lastName', 'firstName', 'username', 'email', 'phoneNumber', 'roles', 'actions']
   dataSource = new MatTableDataSource<User>();
 
   @ViewChild(MatPaginator)
@@ -48,6 +50,22 @@ export class UserList implements OnInit{
     this.userService.getUsers().subscribe(response => {
       this.getUserData(response.data);
     });
+  }
+
+  applyFilter(event: Event): void{
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.dataSource.filter = filterValue.trim().toLocaleLowerCase();
+    if (this.dataSource.paginator) {
+      this.dataSource.paginator.firstPage();
+    }
+  }
+
+  clearFilter(input: HTMLInputElement): void{
+    input.value = '';
+    this.dataSource.filter = '';
+    if (this.dataSource.paginator) {
+      this.dataSource.paginator.firstPage();
+    }
   }
 
   ngOnInit(): void {
@@ -91,12 +109,13 @@ export class UserList implements OnInit{
       icon: "warning",
       showCancelButton: true,
       confirmButtonColor: "#3085d6",
+      cancelButtonText: "Cancelar",
       cancelButtonColor: "#d33",
-      confirmButtonText: "Si!"
+      confirmButtonText: "Aceptar"
     }).then((result) => {
       if (result.isConfirmed) {
+        console.log(result.isConfirmed)
         this.userService.deleteUser(id).subscribe((response: any) => {
-          console.log(`delete user response: ${response.success}`);
           Swal.fire({
             title: "Eliminado!",
             text: "El registro fue eliminado",
@@ -106,7 +125,7 @@ export class UserList implements OnInit{
               this.getUsers();
             }
           });
-        })
+        });
       }
     });
   }

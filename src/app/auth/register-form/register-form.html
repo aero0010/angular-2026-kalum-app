@@ -3,26 +3,30 @@
         <img src="images/logotipo.png" alt="Kalum App">
     </mat-card-title>
     <mat-card class="login-card">
-        <form [formGroup]="registerForm">
+        <form [formGroup]="registerForm" #myForm="ngForm">
             <mat-form-field appearance="fill" class="full-width">
                 <mat-label>Lastname</mat-label>
-                <input matInput formControlName="lastname">
+                <input matInput formControlName="lastName">
             </mat-form-field>
             <mat-form-field appearance="fill" class="full-width">
                 <mat-label>Firstname</mat-label>
-                <input matInput formControlName="firstname">
+                <input matInput formControlName="firstName">
             </mat-form-field>
             <mat-form-field appearance="fill" class="full-width">
                 <mat-label>Username</mat-label>
                 <input matInput formControlName="username">
             </mat-form-field>
             <mat-form-field appearance="fill" class="full-width">
-                <mat-label>Password</mat-label>
-                <input matInput type="password" formControlName="password">
-            </mat-form-field>
-            <mat-form-field appearance="fill" class="full-width">
                 <mat-label>Email</mat-label>
                 <input matInput type="email" formControlName="email">
+            </mat-form-field>
+            <mat-form-field appearance="fill" class="full-width">
+                <mat-label>Phone</mat-label>
+                <input matInput type="email" formControlName="phone">
+            </mat-form-field>
+            <mat-form-field appearance="fill" class="full-width">
+                <mat-label>Password</mat-label>
+                <input matInput type="password" formControlName="password">
             </mat-form-field>
             <button mat-raised-button color="primary" type="submit" (click)="onSave()">
                 Save

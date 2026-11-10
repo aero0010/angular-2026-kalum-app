@@ -9,7 +9,7 @@
             </div>
         </div>
         <mat-divider></mat-divider>
-        <app-sidenav></app-sidenav>
+        <app-sidenav (closeSidenav)="closeSidenav()" ></app-sidenav>
     </mat-sidenav>
     <mat-sidenav-content class="kalum-content">
         <router-outlet></router-outlet>

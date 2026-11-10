@@ -1,0 +1,83 @@
+<mat-card class="maintenance-card">
+    <div class="maintenace-heading">
+        <div class="heading-icon">
+            <mat-icon>admin_panel_settings</mat-icon>
+        </div>
+
+        <div class="heading-text">
+            <h2>Gestión de roles</h2>
+            <p>Administra los roles y los permisos de acceso de Kalum App.</p>
+        </div>
+        <button mat-flat-button color="primary" class="add-button" (click)="openFormCreateRole()">
+            <mat-icon>add_moderator</mat-icon>
+            Agregar Rol
+        </button>
+    </div>
+
+    <mat-card-content class="maintenance-content">
+        <div class="table-toolbar">
+            <mat-form-field appearance="outline" class="search-field">
+                <mat-label>Buscar Rol</mat-label>
+                <mat-icon matPrefix>search</mat-icon>
+                <input type="text" matInput #input (keyup)="applyFilter($event)" placeholder="Buscar por nombre">
+                <button mat-icon-button matSuffix *ngIf="input.value" aria-label="Limpiar búsqueda" (click)="clearFilter(input)">
+                    <mat-icon>close</mat-icon>
+                </button>
+            </mat-form-field>
+            <div class="result-label">
+                <mat-icon>shield</mat-icon>
+                <span>{{ dataSource.filteredData.length }}</span>
+            </div>
+        </div>
+
+        <div class="table-container">
+            <table mat-table [dataSource]="dataSource" class="maintenance-table">
+
+                <ng-container matColumnDef="id">
+                    <th *matHeaderCellDef mat-header-cell class="number-colum">#</th>
+                    <td mat-cell *matCellDef="let role; let i=index" class="number-colum">
+                        <span class="row-number">
+                            {{ (paginator.pageIndex * paginator.pageIndex) + i + 1 }}
+                        </span>
+                    </td>
+                </ng-container>
+
+                <ng-container matColumnDef="name">
+                    <th *matHeaderCellDef mat-header-cell>Rol</th>
+                    <td mat-cell *matCellDef="let role">
+                        <span class="role-name">
+                            <span class="role-icon">
+                                <mat-icon>verified_user</mat-icon>
+                            </span>
+                            {{ role.name }}
+                        </span>
+                    </td>
+                </ng-container>
+
+                <ng-container matColumnDef="actions">
+                    <th *matHeaderCellDef mat-header-cell class="actions-header">Acciones</th>
+                    <td mat-cell *matCellDef="let role; let i = index" class="actions-cell">
+                        <button mat-icon-button class="edit-action" aria-label="Eidtar rol" matTooltip="Editar rol" (click)="openFormEditRole(role)">
+                            <mat-icon>edit</mat-icon>
+                        </button>
+                        <button mat-icon-button class="delete-action" aria-label="Elimiar rol" (click)="deleteRole(role.id)">
+                            <mat-icon>delete</mat-icon>
+                        </button>
+                    </td>
+                </ng-container>
+
+                <tr mat-header-row *matHeaderRowDef="displayColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayColumns"></tr>
+
+                <tr class="mat-row" *matNoDataRow>
+                    <td class="empty-state" [attr.colspan]="displayColumns.length">
+                        <mat-icon>search_off</mat-icon>
+                        <strong>No se encuentraron roles</strong>
+                        <span>Prueba con otro nombre</span>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <mat-paginator #paginator [pageSizeOptions]="[5, 10, 20]" [pageSize]="10" showFirstLastButtons aria-label="Paginación de roles"></mat-paginator>
+    </mat-card-content>
+</mat-card>

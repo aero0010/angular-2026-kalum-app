@@ -7,7 +7,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { Login } from '../model/login.model';
 import Swal from 'sweetalert2';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from '../../services/auth-service';
 
 @Component({
@@ -28,9 +28,17 @@ export class LoginForm implements OnInit {
 
   loginForm!: FormGroup;
   login: Login = new Login();
+  status: string;
+  careerId: string;
 
-  constructor(private formBuilder: FormBuilder, private router: Router, private authService: AuthService){
-
+  constructor(
+    private formBuilder: FormBuilder,
+    private router: Router,
+    private authService: AuthService,
+    private activeRouter: ActivatedRoute
+  ){
+    this.status = this.activeRouter.snapshot.paramMap.get('status') ?? '';
+    this.careerId = this.activeRouter.snapshot.paramMap.get('careerId') ?? '';
   }
 
   ngOnInit(): void {
@@ -76,6 +84,10 @@ export class LoginForm implements OnInit {
   }
 
   OnRegister(){
-    this.router.navigate(['/register'])
+    if (this.status) {
+      this.router.navigate([`/register/status/${this.careerId}`]);
+    }else{
+      this.router.navigate(['/register']);
+    }
   }
 }

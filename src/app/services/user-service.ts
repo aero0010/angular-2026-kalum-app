@@ -18,11 +18,11 @@ export class UserService {
   }
 
   getUsers(): Observable<any>{
-    return this.httpClient.get(<any>(`${this.host}:${this.port}/${this.path}/user`));
+    return this.httpClient.get<any>(`${this.host}:${this.port}/${this.path}/user`);
   }
 
   createUser(user: User): Observable<any>{
-    return this.httpClient.post<any>(`${this.host}:${this.port}/user`, user);
+    return this.httpClient.post<any>(`${this.host}:${this.port}/${this.path}/user`, user);
   }
 
   updateUser(user: User): Observable<any> {
